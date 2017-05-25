@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-// This is the home page.
-class Home extends Component {
-
+class Bulletin extends Component {
+    
     /********************
      *  INITIALIZATION  *
      ********************/
@@ -20,25 +19,10 @@ class Home extends Component {
              top:'0px',
              width:'75%',
              height:'100%',
-             backgroundColor:'whitesmoke'
+             backgroundColor:'green'
          }
      }
 
-     getButtonStyles() {
-         return {
-             border:'none',
-             background:'none',
-             textDecoration:'none',
-             backgroundImage: 'none',
-             outline: '0',
-             WebkitBoxShadow: 'none',
-             boxShadow: 'none',
-             fontSize:'15px',
-             color:'gray',
-             height: '50%',
-             cursor:'pointer'
-         }
-     }
 
 
     /********************
@@ -48,7 +32,7 @@ class Home extends Component {
     render() {
         return (
             <div style={this.contentAreaStyles()}>
-                
+                <h1>Header</h1>
             </div>
         );
     }
@@ -57,7 +41,6 @@ class Home extends Component {
     /********************
      *      BUTTONS      *
      ********************/
-
 }
 
-export default Home;
+export default Bulletin;

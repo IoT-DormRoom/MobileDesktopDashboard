@@ -30,8 +30,7 @@ class TitleArea extends Component {
          return {
              color:'gray',
              textAlign:'center',
-             paddingLeft:'20px',
-             marginTop:'5px'
+             marginTop:'15px'
          }
      }
      getButtonStyles() {
@@ -61,11 +60,6 @@ class TitleArea extends Component {
             <div style={this.getSidebarStyle()}>
                 <h3 style={this.getMenuTitleStyles()}> 
                     Dashboard
-
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button style={this.getButtonStyles()} onClick={this.toggleMenu.bind(this)}>
-                        <p className='fa fa-bars'></p>
-                    </button>
                 </h3>
             </div>
         );
@@ -75,10 +69,6 @@ class TitleArea extends Component {
     /*********************
      *      BUTTONS      *
      *********************/
-
-     toggleMenu() {
-         console.log('Toggled');
-     }
 
 }
 

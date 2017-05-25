@@ -10,7 +10,7 @@ class MenuItem extends Component {
          super();
 
          this.state = {
-             backgroundColor: 'rgb(156, 212, 229)'
+             backgroundColor: 'rgb(118, 226, 168)'
          }
      }
 
@@ -50,7 +50,10 @@ class MenuItem extends Component {
 
     render() {
         return (
-            <div style={this.getStyles()} onMouseEnter={this.hoverEvents.bind(this)} onMouseLeave={this.unhoverEvents.bind(this)}>
+            <div style={this.getStyles()} 
+                onMouseEnter={this.hoverEvents.bind(this)} 
+                onMouseLeave={this.unhoverEvents.bind(this)}
+                onClick={()=>{this.props.click()}}>
                 <h4 style={this.getTitleStyles()}>{this.props.title}</h4>
             </div>
         );
@@ -63,13 +66,13 @@ class MenuItem extends Component {
 
      hoverEvents() {
         this.setState({
-             backgroundColor: 'rgb(124, 183, 201)'
+             backgroundColor: 'rgb(92, 201, 154)'
         })
      }
 
      unhoverEvents() {
         this.setState({
-            backgroundColor: 'rgb(156, 212, 229)'
+            backgroundColor: 'rgb(118, 226, 168)'
         })
      }
 }

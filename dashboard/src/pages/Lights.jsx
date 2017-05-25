@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class About extends Component {
+class Lights extends Component {
     
     /********************
      *  INITIALIZATION  *
@@ -12,6 +12,16 @@ class About extends Component {
      *      STYLES       *
      ********************/
 
+     contentAreaStyles() {
+         return {
+             position:'relative',
+             left:'25%',
+             top:'0px',
+             width:'75%',
+             height:'100%',
+             backgroundColor:'red'
+         }
+     }
 
 
     /********************
@@ -20,7 +30,7 @@ class About extends Component {
 
     render() {
         return (
-            <div>
+            <div style={this.contentAreaStyles()}>
                 <h1>Title</h1>
             </div>
         );
@@ -32,4 +42,4 @@ class About extends Component {
      ********************/
 }
 
-export default About;
+export default Lights;
