@@ -10,6 +10,8 @@ import Messaging from './pages/Messaging.jsx';
 import TodoShared from './pages/TodoShared.jsx';
 import TodoPersonal from './pages/TodoPersonal.jsx';
 import Lights from './pages/Lights.jsx';
+import Account from './pages/Account.jsx';
+import Login from './pages/Login.jsx';
 
 
 // REDUX
@@ -38,6 +40,8 @@ class App extends Component {
         const TodoSharedPage = () => { return <TodoShared sidebar={SB} rStore={store}></TodoShared> }
         const TodoPersonalPage = () => { return <TodoPersonal sidebar={SB} rStore={store}></TodoPersonal> }
         const LightsPage = () => { return <Lights sidebar={SB} rStore={store}></Lights> }
+        const AccountPage = () => { return <Account sidebar={SB} rStore={store}></Account> }
+        const LoginPage = () => { return <Login sidebar={SB} rStore={store}></Login> }
 
         return (
             <BrowserRouter>
@@ -49,6 +53,8 @@ class App extends Component {
                     <Route path="/todoshared" component={TodoSharedPage}></Route>
                     <Route path="/todopersonal" component={TodoPersonalPage}></Route>
                     <Route path="/lights" component={LightsPage}></Route>
+                    <Route path="/account" component={AccountPage}></Route>
+                    <Route path="/login" component={LoginPage}></Route>
                 </div>
             </BrowserRouter>
         );

@@ -48,6 +48,7 @@ class Sidebar extends Component {
                     <MenuItem click={()=>{this.navigateTo('todoshared')}} title='Todo (shared)'></MenuItem>
                     <MenuItem click={()=>{this.navigateTo('todopersonal')}} title='Todo (personal)'></MenuItem>
                     <MenuItem click={()=>{this.navigateTo('lights')}} title='Lights'></MenuItem>
+                    <MenuItem click={()=>{this.navigateTo('account')}} title='Account'></MenuItem>
                 </div>
             </div>
         );
