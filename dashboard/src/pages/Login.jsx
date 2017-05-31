@@ -158,6 +158,10 @@ class Login extends Component {
 
             }); // End of getting data.
 
+         }).catch( (err) => {
+
+             alert(err.message);
+
          }); // End of logging in.
      }
 

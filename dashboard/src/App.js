@@ -25,6 +25,10 @@ const sidebar = (state = defaultState, action) => {
             state.currentUser = action.currentUser;
             //console.log(state.currentUser);
             break;
+        case 'LOGOUT':
+            state.currentUser = null;
+            console.log(state.currentUser);
+            break;
         default: break;
     }
 

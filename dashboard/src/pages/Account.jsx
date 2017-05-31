@@ -49,7 +49,7 @@ class Account extends Component {
     render() {
         return (
             <div style={this.contentAreaStyles()}>
-                
+                <button onClick={this.handleLogout.bind(this)}>Logout</button>
             </div>
         );
     }
@@ -58,6 +58,13 @@ class Account extends Component {
     /********************
      *      BUTTONS      *
      ********************/
+
+    handleLogout() {
+        this.props.rStore.dispatch({
+            type:'LOGOUT'
+        })
+        window.localStorage.removeItem('currentUser');
+    }
 }
 
 export default Account;

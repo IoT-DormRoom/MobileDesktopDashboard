@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
+import sCode from '../../public/specialcode.json';
+
 class SignUp extends Component {
 
     /********************
@@ -106,6 +108,8 @@ class SignUp extends Component {
                         <input ref={(input)=>{this.passwordField = input}} type='password' placeholder='Enter your password' style={this.getInputStyles()}/>
                         <br/><br/>
                         <input ref={(input)=>{this.confirmPasswordField = input}} type='password' placeholder='Re-enter your password' style={this.getInputStyles()}/>
+                        <br/><br/>
+                        <input ref={(input)=>{this.specialCodeField = input}} type='text' placeholder='Enter the code required for account creation' style={this.getInputStyles()}/>
                         <br/><br/><br/><br/>
 
                         <button style={this.getButton1Styles()} 
@@ -133,35 +137,46 @@ class SignUp extends Component {
         var email = this.emailField.value;
         var password = this.passwordField.value;
         var confirmPassword = this.confirmPasswordField.value;
+        var specialCode = this.specialCodeField.value;
         
-
         // If values exist for all of the elements.
         if(this.valueExists(firstName) && this.valueExists(lastName) && this.valueExists(email) && this.valueExists(password) && this.valueExists(confirmPassword)) {
             
             // If the passwords match.
             if(password === confirmPassword) {
 
-                // Create the user in firebase auth.
-                firebase.auth().createUserWithEmailAndPassword(email, password).then( (user) => {
-                    
-                    /* This is the completion block. Once the user has been created, save the actual
-                    data to the database. */
+                // Make sure the special code is correct.
+                if(specialCode === sCode.code) {
 
-                    firebase.database().ref().child('Users').child(user.uid).set({
+                    // Create the user in firebase auth.
+                    firebase.auth().createUserWithEmailAndPassword(email, password).then( (user) => {
+                        
+                        /* This is the completion block. Once the user has been created, save the actual
+                        data to the database. */
 
-                        'firstName':firstName,
-                        'lastName':lastName,
-                        'email':email
+                        firebase.database().ref().child('Users').child(user.uid).set({
 
-                    }); // End of saving user to database.
+                            'firstName':firstName,
+                            'lastName':lastName,
+                            'email':email
 
-                    // Go to the account page.
-                    this.props.rStore.dispatch({ type:'LOGIN' });
-                    this.props.sidebar.navigateTo('account');
+                        }); // End of saving user to database.
 
-                }); // End of creating user.
+                        // Go to the account page.
+                        this.props.rStore.dispatch({ type:'LOGIN' });
+                        this.props.sidebar.navigateTo('account');
 
+                    }); // End of creating user.
+
+                } else {
+                    alert('The special code is incorrect. Could not create account.');
+                }
+
+            } else {
+                alert('Passwords do not match. Try again.');
             }
+        } else {
+            alert('Make sure you enter information for each field.');
         }
 
      } // End of method.
