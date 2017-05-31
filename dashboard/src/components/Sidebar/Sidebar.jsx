@@ -22,6 +22,7 @@ class Sidebar extends Component {
             top:'0px',
             width:'25%',
             height:'100%',
+            zIndex:'100',
             boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
             backgroundColor:'rgb(154, 234, 200)',
             WebkitTransitionDuration:'0.3s'

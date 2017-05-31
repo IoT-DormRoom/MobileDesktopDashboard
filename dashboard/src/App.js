@@ -12,14 +12,19 @@ import TodoPersonal from './pages/TodoPersonal.jsx';
 import Lights from './pages/Lights.jsx';
 import Account from './pages/Account.jsx';
 import Login from './pages/Login.jsx';
+import SignUp from './pages/SignUp.jsx';
 
 
 // REDUX
 const defaultState = {
-    
+    currentUser: null
 }
 const sidebar = (state = defaultState, action) => {
     switch (action.type) {
+        case 'LOGIN':
+            state.currentUser = action.currentUser;
+            //console.log(state.currentUser);
+            break;
         default: break;
     }
 
@@ -42,6 +47,7 @@ class App extends Component {
         const LightsPage = () => { return <Lights sidebar={SB} rStore={store}></Lights> }
         const AccountPage = () => { return <Account sidebar={SB} rStore={store}></Account> }
         const LoginPage = () => { return <Login sidebar={SB} rStore={store}></Login> }
+        const SignupPage = () => { return <SignUp sidebar={SB} rStore={store}></SignUp> }
 
         return (
             <BrowserRouter>
@@ -55,6 +61,7 @@ class App extends Component {
                     <Route path="/lights" component={LightsPage}></Route>
                     <Route path="/account" component={AccountPage}></Route>
                     <Route path="/login" component={LoginPage}></Route>
+                    <Route path="/signup" component={SignupPage}></Route>
                 </div>
             </BrowserRouter>
         );
