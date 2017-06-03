@@ -39,7 +39,8 @@ class MenuItem extends Component {
      getTitleStyles() {
          return {
              color:'gray',
-             textAlign:'center'
+             textAlign:'center',
+             fontFamily:'Marmelad'
          }
      }
 

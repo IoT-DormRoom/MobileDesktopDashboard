@@ -30,7 +30,8 @@ class TitleArea extends Component {
          return {
              color:'gray',
              textAlign:'center',
-             marginTop:'15px'
+             marginTop:'15px',
+             fontFamily:'Marmelad'
          }
      }
      getButtonStyles() {
@@ -45,7 +46,8 @@ class TitleArea extends Component {
              fontSize:'15px',
              color:'gray',
              height: '50%',
-             cursor:'pointer'
+             cursor:'pointer',
+             fontFamily:'Marmelad'
          }
      }
 

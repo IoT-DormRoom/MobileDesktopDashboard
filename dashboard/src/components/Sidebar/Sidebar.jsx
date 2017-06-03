@@ -37,7 +37,7 @@ class Sidebar extends Component {
 
     render() {
         return (
-            <div style={this.getSidebarStyle()}>
+            <div ref={(div)=>{this.sb = div}} style={this.getSidebarStyle()}>
                 
                 <TitleArea backgroundColor='rgb(158, 237, 203)'></TitleArea>
 
@@ -57,13 +57,17 @@ class Sidebar extends Component {
 
 
     /*********************
-     *      BUTTONS      *
+     *      METHODS      *
      *********************/
 
      navigateTo(page) {
         this.props.history.push(page);
      }
 
+
+     getWidth() {
+         return this.sb.offsetWidth;
+     }
 }
 
 export default Sidebar;
