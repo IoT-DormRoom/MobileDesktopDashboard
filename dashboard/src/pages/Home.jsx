@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
+
+import Page from '../components/General/Page.jsx';
 
 // This is the home page.
-class Home extends Component {
+class Home extends Page {
 
     /********************
      *  INITIALIZATION  *
@@ -47,8 +49,10 @@ class Home extends Component {
 
     render() {
         return (
-            <div style={this.contentAreaStyles()}>
+            <div style={this.contentAreaStyles()} onMouseDown={()=>{ super.userDidClickPage(); }}>
                 
+
+                {this.props.children}
             </div>
         );
     }

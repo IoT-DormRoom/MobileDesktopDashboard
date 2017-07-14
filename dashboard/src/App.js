@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
+import * as firebase from 'firebase';
 
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 
@@ -17,7 +18,7 @@ import SignUp from './pages/SignUp.jsx';
 
 // REDUX
 const defaultState = {
-    currentUser: null
+    currentUser: null,
 }
 const sidebar = (state = defaultState, action) => {
     switch (action.type) {
@@ -27,8 +28,9 @@ const sidebar = (state = defaultState, action) => {
             break;
         case 'LOGOUT':
             state.currentUser = null;
-            console.log(state.currentUser);
+            //console.log(state.currentUser);
             break;
+
         default: break;
     }
 
@@ -40,23 +42,51 @@ const store = createStore(sidebar);
 
 // This component just handles the routing between pages.
 class App extends Component {
+
+    constructor() {
+        super();
+        this.handleAutoLogin();
+    }
+
+    handleAutoLogin(callback) {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                firebase.database().ref().child('Users').child(user.uid).once('value', (snap) => {
+                    var usr = snap.val();
+                
+                    store.dispatch({
+                        type:'LOGIN',
+                        currentUser: usr
+                    });
+                    //console.log(store.getState().currentUser);
+                    
+                    if(callback) { callback(); }
+                })
+            } else {
+                return;
+            }
+        });
+    }
+
+
     render() {
-        const SB = new Sidebar();
-        const SidebarComponent = () => { return SB }
-        const HomePage = () => { return <Home sidebar={SB} rStore={store}></Home> }
-        const BulletinPage = () => { return <Bulletin sidebar={SB} rStore={store}></Bulletin> }
-        const MessagingPage = () => { return <Messaging sidebar={SB} rStore={store}></Messaging> }
-        const TodoSharedPage = () => { return <TodoShared sidebar={SB} rStore={store}></TodoShared> }
-        const TodoPersonalPage = () => { return <TodoPersonal sidebar={SB} rStore={store}></TodoPersonal> }
-        const LightsPage = () => { return <Lights sidebar={SB} rStore={store}></Lights> }
-        const AccountPage = () => { return <Account sidebar={SB} rStore={store}></Account> }
-        const LoginPage = () => { return <Login sidebar={SB} rStore={store}></Login> }
-        const SignupPage = () => { return <SignUp sidebar={SB} rStore={store}></SignUp> }
+        const side = new Sidebar();
+        const SB = () => { return side }
+
+        const HomePage = () => { return <Home sidebar={side} rStore={store}>{SB}</Home> }
+        const BulletinPage = () => { return <Bulletin sidebar={side} rStore={store}>{SB}</Bulletin> }
+        const MessagingPage = () => { return <Messaging sidebar={side} rStore={store}>{SB}</Messaging> }
+        const TodoSharedPage = () => { return <TodoShared sidebar={side} rStore={store}>{SB}</TodoShared> }
+        const TodoPersonalPage = () => { return <TodoPersonal sidebar={side} rStore={store}>{SB}</TodoPersonal> }
+        const LightsPage = () => { return <Lights sidebar={side} rStore={store}>{SB}</Lights> }
+        const AccountPage = () => { return <Account sidebar={side} rStore={store}>{SB}</Account> }
+        const LoginPage = () => { return <Login sidebar={side} rStore={store}>{SB}</Login> }
+        const SignupPage = () => { return <SignUp sidebar={side} rStore={store}>{SB}</SignUp> }
 
         return (
             <BrowserRouter>
                 <div>
-                    <Route path="*" component={SidebarComponent}></Route>
+                    <Route path="*" component={SB}></Route>
                     <Route exact path="/" component={HomePage}></Route>
                     <Route path="/bulletin" component={BulletinPage}></Route>
                     <Route path="/messaging" component={MessagingPage}></Route>

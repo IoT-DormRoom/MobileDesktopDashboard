@@ -1,6 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class TodoPersonal extends Component {
+import Page from '../components/General/Page.jsx';
+
+class TodoPersonal extends Page {
     
     /********************
      *  INITIALIZATION  *
@@ -30,8 +32,10 @@ class TodoPersonal extends Component {
 
     render() {
         return (
-            <div style={this.contentAreaStyles()}>
+            <div style={this.contentAreaStyles()} onMouseDown={()=>{ super.userDidClickPage(); }}>
                 <h1>Title</h1>
+
+                {this.props.children}
             </div>
         );
     }

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "alertify.js": "^1.0.12",
     "firebase": "^4.0.0",
     "history": "^4.6.1",
     "react": "^15.4.2",

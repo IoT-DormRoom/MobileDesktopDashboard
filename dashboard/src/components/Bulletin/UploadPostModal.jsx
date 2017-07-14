@@ -76,19 +76,19 @@ class UploadPostModal extends Component {
      configureCreationOptions() {
          if(this.messageChecker.checked) {
              this.setState({
-                contentArea: <MessageCreationArea></MessageCreationArea>
+                contentArea: <MessageCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></MessageCreationArea>
              })
         } else if(this.photoChecker.checked) {
             this.setState({
-                contentArea: <PhotoCreationArea></PhotoCreationArea>
+                contentArea: <PhotoCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></PhotoCreationArea>
             })
         } else if(this.videoChecker.checked) {
             this.setState({
-                contentArea: <VideoCreationArea></VideoCreationArea>
+                contentArea: <VideoCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></VideoCreationArea>
             })
         } else if(this.linkChecker.checked) {
             this.setState({
-                contentArea: <LinkCreationArea></LinkCreationArea>
+                contentArea: <LinkCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></LinkCreationArea>
             })
         } else {
             this.setState({

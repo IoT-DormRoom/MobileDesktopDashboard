@@ -3,6 +3,13 @@ import React, { Component } from 'react';
 class BulletinPost extends Component {
 
     /********************
+     *     VARIABLES    *
+     ********************/
+
+    static SIZE = 150;
+
+
+    /********************
      *  INITIALIZATION  *
      ********************/
 
@@ -27,37 +34,37 @@ class BulletinPost extends Component {
      *      STYLES       *
      *********************/
 
-     getStyles() {
-         return {
+    getStyles() {
+        return {
             position:'absolute',
             top:this.props.yPos,
             left:this.props.xPos,
-            width:'120px',
-            height:'120px',
+            width:'150px',
+            height:'150px',
             backgroundColor:'white',
             border: this.state.border,
             transform:'rotate('+this.props.rotation+'deg)',
-         }
-     }
-     getContentStyles() {
-         return {
-             position:'relative',
-             left:'5%',
-             top:'3%',
-             width:'90%',
-             height:'80%',
-             backgroundColor:'lightblue'
-         }
-     }
-     getTitleStlyes() {
-         return {
+        }
+    }
+    getContentStyles() {
+        return {
             position:'relative',
-            top:'-3%',
-            left:'2%',
-            width:'98%',
-            fontFamily:'Marmelad'
-         }
-     }
+            left:'5%',
+            top:'3%',
+            width:'90%',
+            height:'80%',
+            backgroundColor:'lightblue'
+        }
+    }
+    getTitleStlyes() {
+        return {
+        position:'relative',
+        top:'-2%',
+        left:'2%',
+        width:'98%',
+        fontFamily:'Marmelad'
+        }
+    }
 
 
 
@@ -78,7 +85,7 @@ class BulletinPost extends Component {
 
 
                 <div style={this.getTitleStlyes()}>
-                    <h4 style={{fontFamily:'Marmelad',fontSize:'15px'}}>Title</h4>
+                    <h4 style={{fontFamily:'Marmelad',fontSize:'15px'}}>{this.props.title}</h4>
                 </div>
             </div>
         );
