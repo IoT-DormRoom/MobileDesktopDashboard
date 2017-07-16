@@ -20,8 +20,19 @@ class TodoShared extends Page {
     }
 
     componentDidMount() {
+        const currentUser = this.props.rStore.getState().currentUser;
+        if(currentUser === null) {
+            this.props.sidebar.navigateTo('account');
+            return;
+        }
+
         this.loadSharedTodos();
     }
+
+    componentWillUnmount() {
+        firebase.database().ref().child('TodoShared').off();
+    }
+
 
 
     /********************
@@ -152,33 +163,7 @@ class TodoShared extends Page {
 
     /** Loads all the todos that are shared between us. */
     loadSharedTodos() {
-        firebase.database().ref().child('TodoShared').on('value', (snap) => {
-            var t = [];
-            snap.forEach( (todoShared) => {
-                var todo = todoShared.val();
-
-                const tooltip = (
-                    <Tooltip id="tooltip">Click to complete todo</Tooltip>
-                );
-
-                // Create the cell
-                const cell = <ToDoCell key={todo.id}>
-                    <OverlayTrigger placement="bottom" overlay={tooltip}>
-                        <button onClick={()=>{this.completeTodo(todo.id)}}
-                                style={this.checkButtonStyles()}>
-                                <span style={{position:'relative',top:'-25px',color:'lightgray'}} className='fa fa-check'></span>
-                        </button>
-                    </OverlayTrigger>
-                    
-                    <h1 style={this.toDoListTextStyle()}>{todo.content}</h1>
-                </ToDoCell>
-
-                t.push(cell);
-                this.setState({
-                    todos: t
-                });
-            });
-        });
+        firebase.database().ref().child('TodoShared').on('value', this.observeEvent.bind(this));
     }
 
 
@@ -186,8 +171,38 @@ class TodoShared extends Page {
     /** Handles completing a todo and removing it from the database. */
     completeTodo(id) {
         firebase.database().ref().child('TodoShared').child(id).remove();
-
         Alertify.success('Completed todo!');
+    }
+
+
+
+
+    observeEvent(snap) {
+        var t = [];
+        snap.forEach( (todoShared) => {
+            var todo = todoShared.val();
+
+            const tooltip = (
+                <Tooltip id="tooltip">Click to complete todo</Tooltip>
+            );
+
+            // Create the cell
+            const cell = <ToDoCell key={todo.id}>
+                <OverlayTrigger placement="bottom" overlay={tooltip}>
+                    <button onClick={()=>{this.completeTodo(todo.id)}}
+                            style={this.checkButtonStyles()}>
+                            <span style={{position:'relative',top:'-25px',color:'lightgray'}} className='fa fa-check'></span>
+                    </button>
+                </OverlayTrigger>
+                
+                <h1 style={this.toDoListTextStyle()}>{todo.content}</h1>
+            </ToDoCell>
+
+            t.push(cell);
+        });
+        this.setState({
+            todos: t
+        });
     }
 
 }
