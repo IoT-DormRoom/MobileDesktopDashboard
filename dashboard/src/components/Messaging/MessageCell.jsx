@@ -16,12 +16,10 @@ class MessageCell extends Component {
         return {
             ...this.props.style,
             width: '90%',
-            height: '90px',
             margin: 'auto',
-            cursor: 'pointer',
             textAlign: 'center',
             marginBottom: '30px',
-            backgroundColor: this.props.color || 'rgba(0, 0, 0, 0.1)'
+            backgroundColor: this.props.color || 'rgba(255, 255, 255, 0.5)'
         }
     }
     getSenderNameStyles() {
@@ -30,18 +28,22 @@ class MessageCell extends Component {
             height:'10%',
             color:'white',
             margin:'margin',
-            textAlign:'center'
+            textAlign:'center',
+            paddingTop:'10px',
+            paddingBottom:'10px'
         }
     }
     getMessageContentStyles() {
         return {
             position:"relative",
             top:'10%',
-            width:'100%',
+            width:'80%',
             height:'90%',
             color:'white',
-            margin:'margin',
-            textAlign:'center'
+            margin:'auto',
+            textAlign:'center',
+            paddingBottom:'20px',
+            wordWrap:'break-word',
         }
     }
 
@@ -54,7 +56,6 @@ class MessageCell extends Component {
         return (
             <div onClick={this.props.click || (()=>{})} style={this.getCellStyles()}>
                 <h4 style={this.getSenderNameStyles()}>{this.props.senderName}</h4>
-
                 <p style={this.getMessageContentStyles()}>{this.props.content}</p>
             </div>
         );
@@ -64,4 +65,8 @@ class MessageCell extends Component {
     /*******************
     *      METHODS     *
     ********************/
+
+
 }
+
+export default MessageCell;

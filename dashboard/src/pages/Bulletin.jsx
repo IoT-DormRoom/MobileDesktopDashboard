@@ -41,6 +41,7 @@ class Bulletin extends Page {
             left:'0px',
             width:'100%',
             height:'1000px',
+            overflow: 'scroll',
             backgroundColor:'rgb(178, 125, 55)'
         }
     }
