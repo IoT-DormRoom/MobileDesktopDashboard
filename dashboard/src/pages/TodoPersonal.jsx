@@ -15,7 +15,8 @@ class TodoPersonal extends Page {
     constructor() {
         super();
         this.state = {
-            todos: []
+            todos: [],
+            todoIDs: []
         }
     }
 
@@ -169,13 +170,28 @@ class TodoPersonal extends Page {
         const currentUser = this.props.rStore.getState().currentUser;
         if(currentUser === null) { return; }
 
-        firebase.database().ref().child('TodoPersonal').orderByChild('uploader').equalTo(currentUser.uid).on('value', this.observeEvent.bind(this));
+        firebase.database().ref().child('TodoPersonal').orderByChild('uploader').equalTo(currentUser.uid).on('child_added', this.observeEvent.bind(this));
     }
 
 
 
     /** Handles completing a todo and removing it from the database. */
     completeTodo(id) {
+        var newTodos = [];
+        var newIDs = [];
+
+        for(var i = 0; i < this.state.todoIDs.length; i++) {
+            if(this.state.todoIDs[i] !== id) {
+                newTodos.push(this.state.todos[i]);
+                newIDs.push(this.state.todoIDs[i]);
+            }
+        }
+
+        this.setState({
+            todos: newTodos,
+            todoIDs: newIDs
+        });
+        
         firebase.database().ref().child('TodoPersonal').child(id).remove();
         Alertify.success('Completed todo!');
     }
@@ -187,30 +203,27 @@ class TodoPersonal extends Page {
 
 
     observeEvent(snap) {
-        var t = [];
-        snap.forEach( (todoPersonal) => {
-            var todo = todoPersonal.val();
+        var todo = snap.val();
 
-            const tooltip = (
-                <Tooltip id="tooltip">Click to complete todo</Tooltip>
-            );
+        const tooltip = (
+            <Tooltip id="tooltip">Click to complete todo</Tooltip>
+        );
 
-            // Create the cell
-            const cell = <ToDoCell key={todo.id}>
-                <OverlayTrigger placement="bottom" overlay={tooltip}>
-                    <button onClick={()=>{this.completeTodo(todo.id)}}
-                            style={this.checkButtonStyles()}>
-                            <span style={{position:'relative',top:'-25px',color:'lightgray'}} className='fa fa-check'></span>
-                    </button>
-                </OverlayTrigger>
-                
-                <h1 style={this.toDoListTextStyle()}>{todo.content}</h1>
-            </ToDoCell>
+        // Create the cell
+        const cell = <ToDoCell key={todo.id}>
+            <OverlayTrigger placement="bottom" overlay={tooltip}>
+                <button onClick={()=>{this.completeTodo(todo.id)}}
+                        style={this.checkButtonStyles()}>
+                        <span style={{position:'relative',top:'-25px',color:'lightgray'}} className='fa fa-check'></span>
+                </button>
+            </OverlayTrigger>
+            
+            <h1 style={this.toDoListTextStyle()}>{todo.content}</h1>
+        </ToDoCell>
 
-            t.push(cell);
-        });
-        this.setState({
-            todos: t
+        this.setState({ 
+            todos: this.state.todos.concat([cell]),
+            todoIDs: this.state.todoIDs.concat([todo.id])
         });
     }
 

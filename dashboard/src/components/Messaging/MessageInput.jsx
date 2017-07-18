@@ -34,7 +34,7 @@ class MessageInput extends Component {
 
     render() {
         return (
-            <textarea type="text" style={this.getStyle()} placeholder={this.props.placeholder}>
+            <textarea ref={(textarea)=>{this.area = textarea}} type="text" style={this.getStyle()} placeholder={this.props.placeholder}>
             </textarea>
         );
     }
@@ -44,7 +44,13 @@ class MessageInput extends Component {
     *      METHODS      *
     ********************/
 
+    getText() {
+        return this.area.value
+    }
 
+    clearText() {
+        this.area.value = ""
+    }
 
 }
 

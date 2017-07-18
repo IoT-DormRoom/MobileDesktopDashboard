@@ -29,7 +29,17 @@ class MessageCell extends Component {
             color:'white',
             margin:'margin',
             textAlign:'center',
-            paddingTop:'10px',
+            paddingTop:'10px'
+        }
+    }
+    getTimeStyles() {
+        return {
+            width:'100%',
+            height:'5%',
+            color:'white',
+            margin:'margin',
+            textAlign:'center',
+            paddingTop:'-5px',
             paddingBottom:'10px'
         }
     }
@@ -56,6 +66,7 @@ class MessageCell extends Component {
         return (
             <div onClick={this.props.click || (()=>{})} style={this.getCellStyles()}>
                 <h4 style={this.getSenderNameStyles()}>{this.props.senderName}</h4>
+                <p style={this.getTimeStyles()}>{this.props.time}</p>
                 <p style={this.getMessageContentStyles()}>{this.props.content}</p>
             </div>
         );
