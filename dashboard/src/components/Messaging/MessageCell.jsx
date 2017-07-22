@@ -40,7 +40,8 @@ class MessageCell extends Component {
             margin:'margin',
             textAlign:'center',
             paddingTop:'-5px',
-            paddingBottom:'10px'
+            paddingBottom:'10px',
+            fontSize:'16px'
         }
     }
     getMessageContentStyles() {
@@ -54,6 +55,7 @@ class MessageCell extends Component {
             textAlign:'center',
             paddingBottom:'20px',
             wordWrap:'break-word',
+            fontSize:'16px'
         }
     }
 

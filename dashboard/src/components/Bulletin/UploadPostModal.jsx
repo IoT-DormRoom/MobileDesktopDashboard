@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Modal } from 'react-bootstrap';
 
-import { MessageCreationArea, PhotoCreationArea,
-         VideoCreationArea, LinkCreationArea } from './ContentCreationArea.jsx';
+import { MessageCreationArea, PhotoCreationArea, LinkCreationArea } from './ContentCreationArea.jsx';
 
 class UploadPostModal extends Component {
 
@@ -48,7 +47,6 @@ class UploadPostModal extends Component {
                     <p>What type of post are you making?</p>
                     <input ref={(input)=>{this.messageChecker = input}} type="radio" name="postType" value="message" onChange={this.configureCreationOptions.bind(this)}/> Message &nbsp;
                     <input ref={(input)=>{this.photoChecker = input}} type="radio" name="postType" value="photo" onChange={this.configureCreationOptions.bind(this)}/> Photo/GIF &nbsp;
-                    <input ref={(input)=>{this.videoChecker = input}} type="radio" name="postType" value="video" onChange={this.configureCreationOptions.bind(this)}/> Video &nbsp;
                     <input ref={(input)=>{this.linkChecker = input}} type="radio" name="postType" value="link" onChange={this.configureCreationOptions.bind(this)}/> Link <br/>
 
 
@@ -81,10 +79,6 @@ class UploadPostModal extends Component {
         } else if(this.photoChecker.checked) {
             this.setState({
                 contentArea: <PhotoCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></PhotoCreationArea>
-            })
-        } else if(this.videoChecker.checked) {
-            this.setState({
-                contentArea: <VideoCreationArea rStore={this.props.rStore} xCoord={this.props.xCoord} yCoord={this.props.yCoord}></VideoCreationArea>
             })
         } else if(this.linkChecker.checked) {
             this.setState({

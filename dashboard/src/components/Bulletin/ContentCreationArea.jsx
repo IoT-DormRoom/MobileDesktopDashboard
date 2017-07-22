@@ -11,6 +11,7 @@ function valueExists(element) {
 }
 
 
+
 /* eslint-disable */
 export class MessageCreationArea extends Component {
 
@@ -65,7 +66,7 @@ export class MessageCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number"/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
                 </div>
                 <br/><br/>
                 <button style={this.getSubmitButtonStyles()} onClick={this.handleSubmit.bind(this)}>Submit</button>
@@ -90,6 +91,7 @@ export class MessageCreationArea extends Component {
             path.set({
                 "uploader":store.currentUser.uid,
                 "content":message,
+                "type":"message",
                 "uploadDate":Date.now(),
                 "title":title,
                 "xCoord":this.props.xCoord,
@@ -106,11 +108,6 @@ export class MessageCreationArea extends Component {
 }
 
 
-/**
- * 
- *  COME BACK TO THIS 
- * 
- * */
 export class PhotoCreationArea extends Component {
 
     /********************
@@ -207,7 +204,7 @@ export class PhotoCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number"/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
                 </div>
 
                 <br/><br/>
@@ -255,18 +252,22 @@ export class PhotoCreationArea extends Component {
             // Handle if an image is uploaded.
             if(image !== null && image !== undefined) {
 
-                // Set the database path.
-                databasePath.set({
-                    "uploader":store.currentUser.uid,
-                    //"content/contentLink": THE IMAGE LINK OR THE BASE 64 STRING,
-                    "uploadDate":Date.now(),
-                    "title":title,
-                    "xCoord":this.props.xCoord,
-                    "yCoord":this.props.yCoord,
-                    "rotation":rotation,
-                    "id":databasePath.key
-                }).then( () => {
-                    window.location.reload(true);
+                // Create a file version.
+                var uploadTask = firebase.storage().ref().child('images').child(databasePath.key).putString(image, 'data_url').then( (snap) => {
+                    // Set the database path.
+                    databasePath.set({
+                        "uploader":store.currentUser.uid,
+                        "content": snap.downloadURL,
+                        "type":"photo",
+                        "uploadDate":Date.now(),
+                        "title":title,
+                        "xCoord":this.props.xCoord,
+                        "yCoord":this.props.yCoord,
+                        "rotation":rotation,
+                        "id":databasePath.key
+                    }).then( () => {
+                        window.location.reload(true);
+                    });
                 });
 
             } 
@@ -276,7 +277,8 @@ export class PhotoCreationArea extends Component {
                 // Set the database path.
                 databasePath.set({
                     "uploader":store.currentUser.uid,
-                    "contentURL": url,
+                    "content": url,
+                    "type":"photo",
                     "uploadDate":Date.now(),
                     "title":title,
                     "xCoord":this.props.xCoord,
@@ -305,137 +307,6 @@ export class PhotoCreationArea extends Component {
 
     valueExists(element) {
         return (element !== '' && element !== " " && element !== null && element !== undefined);
-    }
-}
-
-/**
- * 
- *  COME BACK TO THIS 
- * 
- * */
-export class VideoCreationArea extends Component {
-    /********************
-     *       INIT       *
-     ********************/
-
-     constructor() {
-         super();
-         this.state = {
-             visible:'hidden',
-             backgroundColor:'lightgreen'
-         }
-     }
-
-    
-    /********************
-     *      STYLES      *
-     ********************/
-
-     getHeaderStyles() {
-         return {
-             fontSize:'25px',
-             fontFamily:'Marmelad'
-         }
-     }
-     uploadFromFileButton() {
-         return {
-             width:'180px',
-             height:'35px',
-             border:'none',
-             cursor:'pointer',
-             paddingTop:'10px',
-             borderRadius:'25px',
-             backgroundColor:this.state.backgroundColor
-         }
-     }
-     getSubmitButtonStyles() {
-         return {
-             width:'80px',
-             height:'35px',
-             border:'none',
-             outline:'none',
-             fontSize:'16px',
-             background:'none',
-             borderRadius:'25px',
-             fontFamily:'Marmelad',
-             textDecoration:'none',
-             backgroundColor:'rgb(106, 215, 232)',
-         }
-     }
-     getUploadLabelStyles() {
-         return {
-             color:'green',
-             visibility:this.state.visible
-         }
-     }
-
-
-    /********************
-     *      RENDER      *
-     ********************/
-
-    render() {
-        return (
-            <div>
-                <br/>
-                <h1 style={this.getHeaderStyles()}>Video</h1>
-                <br/>
-                <div>
-                    <p style={{display:'inline-block'}}>Title: </p>
-                    &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.titleField = input}} style={{display:'inline-block'}} type="text"/>
-                </div>
-                <p style={this.getUploadLabelStyles()}>Uploaded File</p>
-                <FileChooser name='photoChooser' id='photoChooser' accept='image/*' fileSelectedHandler={(e)=>{this.chooseFile(e)}}>
-                    <h5 style={this.uploadFromFileButton()} onMouseOver={this.onHover.bind(this)} onMouseLeave={this.onRelease.bind(this)}>
-                        Upload from file
-                    </h5>
-                </FileChooser>
-
-                <h5>Or</h5>
-
-                <div>
-                    <p style={{display:'inline-block'}}>Enter the URL for the video: </p>
-                    &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'300px',display:'inline-block'}} type="text"/>
-                </div>
-                <br/>
-                <div>
-                    <p style={{display:'inline-block'}}>Rotation: </p>
-                    &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number"/>
-                </div>
-
-                <br/><br/>
-                <button style={this.getSubmitButtonStyles()} onClick={this.handleSubmit.bind(this)}>Submit</button>
-            </div>
-        );
-    }
-
-    /********************
-     *      METHODS     *
-     ********************/
-
-    onHover() {
-        this.setState({
-            backgroundColor:'rgb(53, 173, 107)'
-        })
-    }
-
-    onRelease() {
-        this.setState({
-            backgroundColor:'lightgreen'
-        })
-    }
-
-    chooseFile(e) {
-        this.setState({
-            visible:'visible'
-        })
-    }
-
-    handleSubmit() {
-
     }
 }
 
@@ -505,7 +376,7 @@ export class LinkCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number"/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
                 </div>
 
                 <br/><br/>
@@ -530,7 +401,8 @@ export class LinkCreationArea extends Component {
             var path = firebase.database().ref().child('Bulletin').push()
             path.set({
                 "uploader":store.currentUser.uid,
-                "url":url,
+                "content":url,
+                "type":"link",
                 "uploadDate":Date.now(),
                 "title":title,
                 "xCoord":this.props.xCoord,

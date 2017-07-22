@@ -65,7 +65,8 @@ class RoundRectButton extends Component {
 
     render() {
         return (
-            <button style={this.getButtonStyles()}
+            <button ref={(button)=>{this.btn = button}}
+                    style={this.getButtonStyles()}
                     onMouseEnter={this.handleHover.bind(this)}
                     onMouseLeave={this.handleUnhover.bind(this)}
                     onClick={this.handleClick.bind(this)}>
