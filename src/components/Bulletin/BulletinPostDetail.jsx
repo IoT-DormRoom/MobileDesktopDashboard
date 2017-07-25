@@ -138,15 +138,17 @@ class BulletinPostDetail extends Component {
 
 
     configureContent() {
+        var cont = null;
+
         if(this.state.type === 'photo') {
-            var cont = <div style={this.getContentStyles()}>
+            cont = <div style={this.getContentStyles()}>
                 <img src={this.state.content} alt="preview" width='100%' height='100%'/>
             </div>
 
             this.setState({ content: cont });
         }
         else if(this.state.type === 'link') {
-            var cont = <div style={this.getContentStyles()}>
+            cont = <div style={this.getContentStyles()}>
                 <button onClick={()=>{ window.location = ''+this.state.content }}>{this.state.content}</button>
                 <br/><br/>
                 <iframe src={"" + this.state.content} frameBorder="0" style={{width:'100%', height:'100%'}}/>
@@ -155,7 +157,7 @@ class BulletinPostDetail extends Component {
             this.setState({ content: cont });
         }
         else {
-            var cont = <div style={this.getContentStyles()}>
+            cont = <div style={this.getContentStyles()}>
                 <textarea style={this.getTextAreaStyles()} value={this.state.content} cols="55" rows="10" readOnly></textarea>
             </div>
 
@@ -172,6 +174,7 @@ class BulletinPostDetail extends Component {
             case 4: return 'Thursday'
             case 5: return 'Friday'
             case 6: return 'Saturday'
+            default: return 'Monday'
         }
     }
 
@@ -189,6 +192,7 @@ class BulletinPostDetail extends Component {
             case 9: return 'October'
             case 10: return 'November'
             case 11: return 'December'
+            default: return 'January'
         }
     }
 }

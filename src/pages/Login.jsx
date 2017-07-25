@@ -25,7 +25,7 @@ class Login extends Page {
             height:'100%',
             textAlign:'center',
             backgroundColor:'rgb(90, 201, 173)'
-    }
+        }
     }
     getTitleStyle() {
         return {
