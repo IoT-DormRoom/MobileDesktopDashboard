@@ -1,7 +1,7 @@
 {
   "name": "dashboard",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "alertify.js": "^1.0.12",
     "firebase": "^4.0.0",
