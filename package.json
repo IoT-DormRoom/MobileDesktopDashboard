@@ -4,7 +4,7 @@
   "private": false,
   "dependencies": {
     "alertify.js": "^1.0.12",
-    "firebase": "^4.0.0",
+    "firebase-admin": "^5.0.1",
     "history": "^4.6.1",
     "react": "^15.4.2",
     "react-bootstrap": "^0.31.0",
