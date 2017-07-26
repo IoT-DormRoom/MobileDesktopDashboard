@@ -43,9 +43,9 @@ class Bulletin extends Page {
             top:'0px',
             left:'0px',
             width:'100%',
-            height:'1000px',
+            height:'100%',
             overflow: 'scroll',
-            backgroundColor:'rgb(178, 125, 55)'
+            backgroundColor:'rgb(188, 139, 75)'
         }
     }
     getBulletinAreaStyles() {
@@ -53,8 +53,7 @@ class Bulletin extends Page {
             position:'absolute',
             width:'100%',
             height:'100%',
-            overflow:'scroll',
-            backgroundColor:'rgb(178, 125, 55)'
+            overflow:'scroll'
         }
     }
     getAddButtonStyles() {
@@ -135,6 +134,7 @@ class Bulletin extends Page {
                                                 uploader={post.uploader}
                                                 type={post.type}
                                                 id={p.key}
+                                                read={post.read || false}
                                                 uploadDate={post.uploadDate}></BulletinPost>;
                     temp.push(postItem);
 

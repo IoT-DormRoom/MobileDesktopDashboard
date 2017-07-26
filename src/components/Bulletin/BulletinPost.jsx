@@ -27,6 +27,7 @@ class BulletinPost extends Component {
             title:'',          // the title of the post when uploaded
             type: 'message',
             id:'',
+            read:false,
 
             border:'none',
             preview: <div></div>,
@@ -41,7 +42,8 @@ class BulletinPost extends Component {
             uploader: this.props.uploader,
             uploadDate: this.props.uploadDate,
             type: this.props.type,
-            id: this.props.id
+            id: this.props.id,
+            read: this.props.read
         }, () => {
             this.postDetail.setType(this.state.type);
             firebase.database().ref().child('Users').child(this.state.uploader).once('value', (snap) => {
@@ -56,6 +58,7 @@ class BulletinPost extends Component {
                 });
             });
             this.loadThumbnail();
+            this.setupRead();
         });
     }
 
@@ -95,6 +98,22 @@ class BulletinPost extends Component {
         fontFamily:'Marmelad'
         }
     }
+    getUndreadStyles() {
+        return {
+            position: 'absolute',
+            top: '-10px',
+            right: '-10px',
+            width: '50px',
+            height: '30px',
+            zIndex: '100',
+            color: 'white',
+            lineHeight: '30px',
+            textAlign: 'center',
+            borderRadius: '25px',
+            visibility: this.state.read === true ? 'hidden' : 'visible',
+            backgroundColor: 'rgb(119, 47, 191)'
+        }
+    }
 
 
 
@@ -110,11 +129,18 @@ class BulletinPost extends Component {
                 onMouseEnter={this.handleHover.bind(this)}
                 onMouseLeave={this.handleUnhover.bind(this)}>
 
+                {/* The unread indicator. */}
+                <div style={this.getUndreadStyles()}>
+                    NEW                    
+                </div>
+
+                {/* The preview. */}
                 <div style={this.getContentStyles()}>
                     {this.state.preview}
                 </div>
 
 
+                {/* The title. */}
                 <div style={this.getTitleStlyes()}>
                     <h4 style={{fontFamily:'Marmelad',fontSize:'15px'}}>{this.state.title}</h4>
                 </div>
@@ -123,7 +149,6 @@ class BulletinPost extends Component {
                 <BulletinPostDetail ref={(BulletinPostDetail)=>{this.postDetail = BulletinPostDetail}}
                                     show={this.state.showUploadModal}
                                     onHide={()=>{this.handleCloseModal()}}
-                                    title={this.state.title}
                                     uploader={this.state.uploaderName}
                                     uploadDate={this.state.uploadDate}
                                     content={this.state.content}>
@@ -157,13 +182,20 @@ class BulletinPost extends Component {
             title = this.props.title.substring(0,MAX_LENGTH) + "...";
         }
 
-        this.setState({ title: title });
+        this.setState({ title: title }, () => {
+            this.postDetail.setTitle(this.props.title);
+        });
     }
 
 
 
     didSelectBulletinPost() {
-        this.setState({ showUploadModal: true });
+        this.setState({ 
+            showUploadModal: true,
+            read: true
+        }, () => {
+            firebase.database().ref().child('Bulletin').child(this.state.id).child('read').set(true);
+        });
     }
 
 
@@ -184,6 +216,12 @@ class BulletinPost extends Component {
     *      CONTENT      *
     *********************/
 
+    setupRead() {
+        if(this.state.read) {
+            
+        }
+    }
+
     loadThumbnail() {
         var content = this.state.content;
         var type = this.props.type;
@@ -200,16 +238,17 @@ class BulletinPost extends Component {
             var img = <img src={"" + content} alt="preview" style={{position:'absolute',width:'100%',height:'100%'}}/>
             this.setState({ preview: <div>{img}</div> });
 
-        } else if(type === 'video') {
-
-            // Load preview
-            var vid = <video src={""+content}></video>
-            this.setState({ preview: <div>{vid}</div> });
-
         } else {
 
             // Message preview
-            var text = <p style={{position:'absolute',left:'5px',right:'5px'}}>{content.substring(0, 80)}...</p>
+            var previewStyles = {
+                position:'absolute',
+                left:'2%',
+                top:'2%',
+                width:'98%',
+                wordWrap:'break-word'
+            };
+            var text = <p style={previewStyles}>{content.substring(0,80)}...</p>
             this.setState({ preview: <div>{text}</div> });
 
         }

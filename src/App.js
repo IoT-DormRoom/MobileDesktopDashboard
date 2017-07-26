@@ -5,7 +5,6 @@ import * as firebase from 'firebase';
 
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 
-import Home from './pages/Home.jsx';
 import Bulletin from './pages/Bulletin.jsx';
 import Messaging from './pages/Messaging.jsx';
 import TodoShared from './pages/TodoShared.jsx';
@@ -73,7 +72,6 @@ class App extends Component {
         const side = new Sidebar();
         const SB = () => { return side }
 
-        const HomePage = () => { return <Home sidebar={side} rStore={store}>{SB}</Home> }
         const BulletinPage = () => { return <Bulletin sidebar={side} rStore={store}>{SB}</Bulletin> }
         const MessagingPage = () => { return <Messaging sidebar={side} rStore={store}>{SB}</Messaging> }
         const TodoSharedPage = () => { return <TodoShared sidebar={side} rStore={store}>{SB}</TodoShared> }
@@ -87,8 +85,7 @@ class App extends Component {
             <BrowserRouter>
                 <div>
                     <Route path="*" component={SB}></Route>
-                    <Route exact path="/" component={HomePage}></Route>
-                    <Route path="/bulletin" component={BulletinPage}></Route>
+                    <Route path="/" component={BulletinPage}></Route>
                     <Route path="/messaging" component={MessagingPage}></Route>
                     <Route path="/todoshared" component={TodoSharedPage}></Route>
                     <Route path="/todopersonal" component={TodoPersonalPage}></Route>

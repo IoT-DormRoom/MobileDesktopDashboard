@@ -66,7 +66,7 @@ export class MessageCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" defaultValue={0}/>
                 </div>
                 <br/><br/>
                 <button style={this.getSubmitButtonStyles()} onClick={this.handleSubmit.bind(this)}>Submit</button>
@@ -97,7 +97,8 @@ export class MessageCreationArea extends Component {
                 "xCoord":this.props.xCoord,
                 "yCoord":this.props.yCoord,
                 "rotation":rotation,
-                "id":path.key
+                "id":path.key,
+                "read":false
             }).then( () => {
                 window.location.reload(true);
             });
@@ -204,7 +205,7 @@ export class PhotoCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" defaultValue={0}/>
                 </div>
 
                 <br/><br/>
@@ -264,7 +265,8 @@ export class PhotoCreationArea extends Component {
                         "xCoord":this.props.xCoord,
                         "yCoord":this.props.yCoord,
                         "rotation":rotation,
-                        "id":databasePath.key
+                        "id":databasePath.key,
+                        "read":false
                     }).then( () => {
                         window.location.reload(true);
                     });
@@ -284,7 +286,8 @@ export class PhotoCreationArea extends Component {
                     "xCoord":this.props.xCoord,
                     "yCoord":this.props.yCoord,
                     "rotation":rotation,
-                    "id":databasePath.key
+                    "id":databasePath.key,
+                    "read":false
                 }).then( () => {
                     window.location.reload(true);
                 });
@@ -376,7 +379,7 @@ export class LinkCreationArea extends Component {
                 <div>
                     <p style={{display:'inline-block'}}>Rotation: </p>
                     &nbsp;&nbsp;&nbsp;
-                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" value={0}/>
+                    <input style={{width:'200px'}} ref={(input)=>{this.rotationField = input}} style={{display:'inline-block'}} type="number" defaultValue={0}/>
                 </div>
 
                 <br/><br/>
@@ -408,7 +411,8 @@ export class LinkCreationArea extends Component {
                 "xCoord":this.props.xCoord,
                 "yCoord":this.props.yCoord,
                 "rotation":rotation,
-                "id":path.key
+                "id":path.key,
+                "read":false
             }).then( () => {
                 window.location.reload(true);
             });

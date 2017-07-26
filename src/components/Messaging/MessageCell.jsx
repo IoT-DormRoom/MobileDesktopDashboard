@@ -79,7 +79,6 @@ class MessageCell extends Component {
     *      METHODS     *
     ********************/
 
-
 }
 
 export default MessageCell;

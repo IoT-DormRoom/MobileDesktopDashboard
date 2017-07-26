@@ -17,7 +17,8 @@ class BulletinPostDetail extends Component {
             uploadDateString: '',
             content: <div></div>,
             type: 'message',
-            id: ''
+            id: '',
+            title: ''
         }
     }
 
@@ -55,7 +56,7 @@ class BulletinPostDetail extends Component {
             <Modal show={this.props.show} onHide={this.props.onHide} aria-labelledby="contained-modal-title-sm">
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-sm" style={{textAlign:'center',fontFamily:'Marmelad'}}>
-                        {this.props.title}
+                        {this.state.title}
                     </Modal.Title>
                 </Modal.Header>
 
@@ -66,6 +67,7 @@ class BulletinPostDetail extends Component {
                     <br/><br/><br/>
                     {this.state.content}
 
+                    <br/><br/><br/>
                     <RoundRectButton ref={(RoundRectButton)=>{this.deleteBtn = RoundRectButton}}
                                     width='100px' height='40px' color='white'
                                     normalColor='rgb(206, 33, 33)'
@@ -90,6 +92,9 @@ class BulletinPostDetail extends Component {
     *      METHODS      *
     *********************/
 
+    setTitle(a) {
+        this.setState({ title: a });
+    }
     setUploaderName(a) {
         this.setState({
             uploaderName: a
